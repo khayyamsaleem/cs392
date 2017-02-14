@@ -12,8 +12,8 @@ all: $(OBJS)
 clean:
 	rm -f $(OBJS)
 
-fclean:
-	rm -f $(OBJS) $(EXEC) ../../lib/$(LIB)
+fclean: clean
+	rm -f ../../lib/$(LIB)
 
 re:
 	make fclean all
