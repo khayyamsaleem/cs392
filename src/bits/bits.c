@@ -144,7 +144,7 @@ int bitAnd(int x, int y) {
  *   Rating: 1
  */
 int bitNor(int x, int y) {
-    return (~(x&y) & ~(x&y));
+    return  (~x) & (~y);
 }
 /* 
  * copyLSB - set all bits of result to least significant bit of x
@@ -154,9 +154,9 @@ int bitNor(int x, int y) {
  *   Rating: 2
  */
 int copyLSB(int x) {
-  return 2;
+    return (x << 31) >> 31;
 }
-/* 
+/*
  * isEqual - return 1 if x == y, and 0 otherwise 
  *   Examples: isEqual(5,5) = 1, isEqual(4,5) = 0
  *   Legal ops: ! ~ & ^ | + << >>
@@ -164,7 +164,7 @@ int copyLSB(int x) {
  *   Rating: 2
  */
 int isEqual(int x, int y) {
-  return 2;
+  return !(x ^ y);
 }
 /* 
  * bitMask - Generate a mask consisting of all 1's 
@@ -206,7 +206,7 @@ int tmax(void) {
  *   Rating: 3
  */
 int isNonNegative(int x) {
-    return 2;
+    return !(x>>31);
 }
 /* 
  * addOK - Determine if can compute x+y without overflow
