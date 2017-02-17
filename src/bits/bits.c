@@ -144,9 +144,7 @@ int bitAnd(int x, int y) {
  *   Rating: 1
  */
 int bitNor(int x, int y) {
-
-  return 2;
-
+    return (~(x&y) & ~(x&y));
 }
 /* 
  * copyLSB - set all bits of result to least significant bit of x
