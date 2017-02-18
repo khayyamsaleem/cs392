@@ -3,14 +3,14 @@
 
 int main(){
     printf("Testing bitNor(0x6, 0x5)\n");
-    printf("%d\n", bitNor(0x6, 0x5));
+    printf("%x\n", bitNor(0x6, 0x5));
     printf("Testing copyLSB(5) = 0xFFFFFFFF\n");
-    printf("%d\n",  copyLSB(5));
+    printf("%x\n",  copyLSB(5));
     printf("Testing isEqual(5,5)=1, isEqual(4,5)=0\n");
     printf("%d\n", isEqual(5, 5));
     printf("%d\n", isEqual(4, 5));
     printf("Testing bitMask(5, 3) = 0x38\n");
-    printf("%d\n", bitMask(5, 3));
+    printf("%x\n", bitMask(5, 3));
     printf("Testing bitCount(5) = 2, bitCount(7) = 3\n");
     printf("%d\n", bitCount(5));
     printf("%d\n", bitCount(7));
@@ -32,8 +32,8 @@ int main(){
     printf("%d\n", isPower2(5));
     printf("%d\n", isPower2(8));
     printf("Testing float_neg(10.0)\n");
-    printf("%d\n", float_neg(10.0));
+    printf("%u\n", float_neg(10.0));
     printf("Testing float_abs(-10.0)\n");
-    printf("%d\n", float_ans(-10.0));
+    printf("%u\n", float_abs(-10.0));
     printf("DONE.\n");
 }
