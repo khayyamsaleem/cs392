@@ -22,6 +22,7 @@ all: \
 clean:
 	$(RM) $(MY_OBJ)
 	$(RM) $(TESTS) 
+	$(RM) src/bits/bits.o
 
 fclean: clean
 	$(RM) $(MY_LIB)
