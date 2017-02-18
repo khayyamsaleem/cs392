@@ -34,6 +34,6 @@ int main(){
     printf("Testing float_neg(10.0)\n");
     printf("%u\n", float_neg(10.0));
     printf("Testing float_abs(-10.0)\n");
-    printf("%u\n", float_abs(-10.0));
+    printf("%u\n", float_abs(10.0));
     printf("DONE.\n");
 }

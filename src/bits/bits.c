@@ -316,15 +316,9 @@ int isPower2(int x) {
  *   Rating: 2
  */
 unsigned float_neg(unsigned uf) {
-    unsigned checkNaN = 0x000000FF << 23; //1's
-    int fpoint = 0x7FFFFF&uf; //fractional portion
-
-    //return arg if exponent bits at powers of 2
-    //are q's and fraction is not zero
-    if((checkNaN & uf) == checkNaN && fpoint)
-        return uf;
-    //else, flip sign bit
-    return uf ^ (1 << 31);
+  if (((uf & 0x7F800000) == 0x7F800000) && (uf & 0x7FFFFF))
+    return uf;
+  return uf ^ (1 << 31);
 }
 /*
  * float_abs - Return bit-level equivalent of absolute value of f for
@@ -338,14 +332,5 @@ unsigned float_neg(unsigned uf) {
  *   Rating: 2
  */
 unsigned float_abs(unsigned uf) {
-    unsigned m = 0x7FFFFFFF;
-    unsigned mNaN = 0x7F800001;
-    unsigned result = uf & m; //sets sign bit to 0
-
-    //if NaN, return arg. all NaN's are greater than
-    //mNaN.
-    if (result >= mNaN)
-        return uf;
-    else
-        return result;
+    return uf & 0x7FFFFFFF;
 }
