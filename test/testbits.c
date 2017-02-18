@@ -1,6 +1,24 @@
 #include <stdio.h>
 #include "bits.h"
 
+unsigned float2Int(float f) {
+    union {
+        float f;
+        unsigned i;
+    } x;
+    x.f = f;
+    return x.i;
+}
+
+float int2Float(unsigned i) {
+    union {
+        float f;
+        unsigned i;
+    } x;
+    x.i = i;
+    return x.f;
+}
+
 int main(){
     printf("Testing bitNor(0x6, 0x5)\n");
     printf("%x\n", bitNor(0x6, 0x5));
@@ -32,8 +50,8 @@ int main(){
     printf("%d\n", isPower2(5));
     printf("%d\n", isPower2(8));
     printf("Testing float_neg(10.0)\n");
-    printf("%u\n", float_neg(10.0));
+    printf("%f\n", int2Float(float_neg(float2Int(10.0))));
     printf("Testing float_abs(-10.0)\n");
-    printf("%u\n", float_abs(10.0));
+    printf("%f\n", int2Float(float_abs(float2Int(-10.0))));
     printf("DONE.\n");
 }
