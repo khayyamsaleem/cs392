@@ -2,6 +2,38 @@
 #include "bits.h"
 
 int main(){
-    printf("%d\n", bitAnd(6, 5));
+    printf("Testing bitNor(0x6, 0x5)\n");
     printf("%d\n", bitNor(0x6, 0x5));
+    printf("Testing copyLSB(5) = 0xFFFFFFFF\n");
+    printf("%d\n",  copyLSB(5));
+    printf("Testing isEqual(5,5)=1, isEqual(4,5)=0\n");
+    printf("%d\n", isEqual(5, 5));
+    printf("%d\n", isEqual(4, 5));
+    printf("Testing bitMask(5, 3) = 0x38\n");
+    printf("%d\n", bitMask(5, 3));
+    printf("Testing bitCount(5) = 2, bitCount(7) = 3\n");
+    printf("%d\n", bitCount(5));
+    printf("%d\n", bitCount(7));
+    printf("Testing tmax\n");
+    printf("%d\n", tmax());
+    printf("Testing isNonNegative(-1) = 0\n");
+    printf("%d\n", isNonNegative(-1));
+    printf("Testing addOK, should yield 0 and 1\n");
+    printf("%d\n", addOK(0x80000000,0x80000000));
+    printf("%d\n", addOK(0x80000000,0x70000000));
+    printf("Testing rempwr2(15,2)=3,rempwr2(-35,3)=-3\n");
+    printf("%d\n", rempwr2(15,2));
+    printf("%d\n", rempwr2(-35,3));
+    printf("Testing isLessOrEqual(4,5) = 1\n");
+    printf("%d\n", isLess(4,5));
+    printf("Testing absVal(-1) = 1\n");
+    printf("%d\n", absVal(-1));
+    printf("Testing isPower2(5) = 0, isPower2(8) = 1\n");
+    printf("%d\n", isPower2(5));
+    printf("%d\n", isPower2(8));
+    printf("Testing float_neg(10.0)\n");
+    printf("%d\n", float_neg(10.0));
+    printf("Testing float_abs(-10.0)\n");
+    printf("%d\n", float_ans(-10.0));
+    printf("DONE.\n");
 }
