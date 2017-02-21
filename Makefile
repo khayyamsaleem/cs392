@@ -5,7 +5,8 @@ MY_SRC := \
 	  src/my/my_char.c \
 	  src/my/my_revstr.c \
 	  src/my/my_str.c \
-	  src/my/my_strlen.c
+	  src/my/my_strlen.c \
+	  src/my/my_int.c
 
 MY_OBJ := $(MY_SRC:.c=.o)
 
@@ -13,7 +14,8 @@ MY_LIB := lib/libmy.a
 
 TESTS := \
 	test/testmy \
-	test/testbits
+	test/testbits \
+	test/test_myint 
 
 all: \
 	$(MY_LIB) \
@@ -38,6 +40,8 @@ check: $(TESTS)
 test/testmy: $(MY_LIB)
 
 test/testbits: $(MY_LIB) src/bits/bits.c
+
+test/test_myint: $(MY_LIB) src/my/my_int.c
 
 $(MY_LIB): $(MY_OBJ)
 
