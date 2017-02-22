@@ -46,4 +46,5 @@ test/test_myint: $(MY_LIB)
 $(MY_LIB): $(MY_OBJ)
 
 %.a:
+	$(RM) $@
 	$(AR) rcs $@ $^
