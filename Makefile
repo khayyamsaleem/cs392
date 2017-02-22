@@ -41,7 +41,7 @@ test/testmy: $(MY_LIB)
 
 test/testbits: $(MY_LIB) src/bits/bits.c
 
-test/test_myint: $(MY_LIB) src/my/my_int.c
+test/test_myint: $(MY_LIB)
 
 $(MY_LIB): $(MY_OBJ)
 
