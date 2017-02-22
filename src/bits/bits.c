@@ -288,8 +288,9 @@ int isLess(int x, int y) {
  *   Rating: 4
  */
 int absVal(int x) {
-    int y = x << 31;
-    return (~y & x) | (y & (~x+1));
+    int y = x >> 31;
+    int negx = ~x+1;
+    return (y&negx) | ((~y)&x);
 }
 /*
  * isPower2 - returns 1 if x is a power of 2, and 0 otherwise
