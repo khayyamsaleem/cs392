@@ -6,7 +6,11 @@ MY_SRC := \
 	  src/my/my_revstr.c \
 	  src/my/my_str.c \
 	  src/my/my_strlen.c \
-	  src/my/my_int.c
+	  src/my/my_int.c \
+	  src/my/my_num_base.c \
+	  src/my/my_strindex.c \
+	  src/my/my_strrindex.c
+
 
 MY_OBJ := $(MY_SRC:.c=.o)
 
