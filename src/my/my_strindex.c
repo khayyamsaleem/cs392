@@ -6,13 +6,16 @@
  * none found
  */
 int my_strindex(char *s, char c){
-    //null checks
+    int length;
+    int i;
+
+    /*null checks*/
     if(s == NULL)
         return -1;
     
-    int length = my_strlen(s);
+    length = my_strlen(s);
 
-    for(int i = 0; i < length; i++){
+    for(i = 0; i < length; i++){
         if(c == s[i])
             return i;
     }

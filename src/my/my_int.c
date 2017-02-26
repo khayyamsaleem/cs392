@@ -10,7 +10,7 @@ void my_int(int c){
     if(c==0)
         my_char('0');
     else{
-        //set counter to zero so temp can be 0
+        /*set counter to zero so temp can be 0 */
         for(count=0; count == 0 || n != 0; count++)
             n /= 10;
         count--;
