@@ -2,3 +2,4 @@
 *.pdf
 *.dSYM
 *.a
+specs/*
