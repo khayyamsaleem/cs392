@@ -190,7 +190,7 @@ int bitMask(int highbit, int lowbit) {
  *   Rating: 4
  */
 int bitCount(int x) {
-    int m1, m2;
+    int m1, m2, sum;
 
     /* encompasses two ls bytes */
     m1 = 0x11 | (0x11 << 8);
@@ -199,7 +199,7 @@ int bitCount(int x) {
     m2 = m1 | (m1 << 16);
 
     /*sum holds # of 1's in string*/
-    int sum = x & m2;
+    sum = x & m2;
     sum = sum + ((x >> 1) & m2);
     sum = sum + ((x >> 2) & m2);
     sum = sum + ((x >> 3) & m2);

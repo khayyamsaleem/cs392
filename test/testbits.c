@@ -58,4 +58,5 @@ int main(){
     printf("Testing float_abs(-10.0)\n");
     printf("%f\n", int2Float(float_abs(float2Int(-10.0))));
     printf("DONE.\n");
+    return 0;
 }
