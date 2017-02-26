@@ -192,29 +192,29 @@ int bitMask(int highbit, int lowbit) {
 int bitCount(int x) {
     int m1, m2;
 
-    // encompasses two ls bytes
+    /* encompasses two ls bytes */
     m1 = 0x11 | (0x11 << 8);
 
-    // encompasses final bytes
+    /* encompasses final bytes */
     m2 = m1 | (m1 << 16);
 
-    //sum holds # of 1's in string
+    /*sum holds # of 1's in string*/
     int sum = x & m2;
     sum = sum + ((x >> 1) & m2);
     sum = sum + ((x >> 2) & m2);
     sum = sum + ((x >> 3) & m2);
 
-    //sum has # of 1's in first 4 bits
-    // strip away 1's after first 4 bits
+    /*sum has # of 1's in first 4 bits
+    // strip away 1's after first 4 bits*/
     sum = sum + (sum >> 16);
 
-    //preserve sum, mask 1's in byte 2
+    /*preserve sum, mask 1's in byte 2*/
     m1 = 0xF | (0xF << 8);
 
-    //toggle bits in sum, adds toggled 4 bits
+    /*toggle bits in sum, adds toggled 4 bits*/
     sum = (sum & m1) + ((sum >> 4) & m1);
 
-    //shift sum by byte, mask sum so 6 bits remain
+    /*shift sum by byte, mask sum so 6 bits remain*/
     return ((sum + (sum >> 8)) & 0x3F);
 }
 /*
@@ -249,8 +249,8 @@ int addOK(int x, int y) {
     int xsign = x >> 31;
     int ysign = y >> 31;
     int xysign = sum >> 31;
-    //overflows when sign of x and y are the same,
-    //but sign of sum differs
+    /*overflows when sign of x and y are the same,
+    //but sign of sum differs*/
     return !(~(xsign ^ ysign) & (xsign ^ xysign));
 }
 /*
@@ -275,7 +275,7 @@ int rempwr2(int x, int n) {
 int isLess(int x, int y) {
     int opp_sign = ((x^y) >> 31);
     int neg_x = x >> 31;
-    int sub = (~((y + (~x + 1)) >> 31)); //not(sgn(y-x)) over 32 bits
+    int sub = (~((y + (~x + 1)) >> 31)); /*not(sgn(y-x)) over 32 bits*/
 
     return (!!(neg_x&opp_sign)) | (!!(sub&(~opp_sign)));
 }
@@ -301,7 +301,7 @@ int absVal(int x) {
  *   Rating: 4
  */
 int isPower2(int x) {
-    //check if x&(x-1) == 0, exclude neg and 0.
+    /*check if x&(x-1) == 0, exclude neg and 0.*/
     int y = x + ~0;
     return !((x&y)|((x >> 31) | !x));
 }

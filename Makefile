@@ -1,4 +1,4 @@
-CFLAGS += -I ./include -g -std=c99 -Wall -Werror -pedantic
+CFLAGS += -I ./include -g -Wall -Werror -pedantic
 
 MY_SRC := \
 	  src/my/my_alpha.c \
