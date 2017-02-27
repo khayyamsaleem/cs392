@@ -71,6 +71,12 @@ int main(){
     my_str("Testing my_strrindex, ('cheese', 'e') -> 5\n");
     my_int(my_strrindex("cheese", 'e'));
     my_char('\n');
+    my_str("Testing my_strfind, ('cheese', 's') -> ptr\nthat when dereferenced, yields 's'\n");
+    my_char(*my_strfind("cheese", 's'));
+    my_char('\n');
+    my_str("Testing my_strrfind, ('cheese', 'e') -> ptr\nthat when dereferenced, yields 'e'\n");
+    my_char(*my_strrfind("cheese", 'e'));
+    my_char('\n');
     return 0;
 
 }
