@@ -1,5 +1,5 @@
 CFLAGS = -I../../include -Wall -Werror --pedantic
-SRC = my_alpha.c my_char.c my_str.c my_strlen.c my_revstr.c my_int.c my_num_base.c my_strindex.c my_strrindex.c
+SRC = my_alpha.c my_char.c my_str.c my_strlen.c my_revstr.c my_int.c my_num_base.c my_strindex.c my_strrindex.c my_strfind.c my_strrfind.c
 OBJS = $(SRC:.c=.o)
 LIB = libmy.a
 CC = gcc
