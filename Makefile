@@ -11,7 +11,9 @@ MY_SRC := \
 	  src/my/my_strindex.c \
 	  src/my/my_strrindex.c \
 	  src/my/my_strfind.c \
-	  src/my/my_strrfind.c
+	  src/my/my_strrfind.c \
+	  src/my/my_strcmp.c \
+	  src/my/my_strncmp.c
 
 
 MY_OBJ := $(MY_SRC:.c=.o)
