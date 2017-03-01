@@ -13,7 +13,14 @@ MY_SRC := \
 	  src/my/my_strfind.c \
 	  src/my/my_strrfind.c \
 	  src/my/my_strcmp.c \
-	  src/my/my_strncmp.c
+	  src/my/my_strncmp.c \
+	  src/my/my_strcpy.c \
+	  src/my/my_strncpy.c \
+	  src/my/my_strcat.c \
+	  src/my/my_strdup.c \
+	  src/my/my_strconcat.c \
+	  src/my/my_strnconcat.c \
+	  src/my/my_atoi.c 
 
 
 MY_OBJ := $(MY_SRC:.c=.o)
