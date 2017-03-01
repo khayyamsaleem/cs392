@@ -77,6 +77,18 @@ int main(){
     my_str("Testing my_strrfind, ('cheese', 'e') -> ptr\nthat when dereferenced, yields 'e'\n");
     my_char(*my_strrfind("cheese", 'e'));
     my_char('\n');
+    my_str("Testing my_strcmp, ('cheese', 'cheese') -> 0\n");
+    my_int(my_strcmp("cheese", "cheese"));
+    my_char('\n');
+    my_str("Testing my_strcmp, ('cheese', 'chomp') -> -10\n");
+    my_int(my_strcmp("cheese", "chomp"));
+    my_char('\n');
+    my_str("Testing my_strncmp, ('cheese', 'chomp', 2) -> 0\n");
+    my_int(my_strncmp("cheese", "chomp", 2));
+    my_char('\n');
+    my_str("Testing my_atoi, ('a-b-54sc85-ed') -> 54\n");
+    my_int(my_atoi("a-b-54sc85-ed"));
+    my_char('\n');
     return 0;
 
 }
