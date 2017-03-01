@@ -40,6 +40,8 @@ clean:
 	$(RM) $(MY_OBJ)
 	$(RM) $(TESTS) 
 	$(RM) src/bits/bits.o
+	$(RM) -r test/*.dSYM
+	$(RM) -r src/my/*.dSYM
 
 fclean: clean
 	$(RM) $(MY_LIB)
