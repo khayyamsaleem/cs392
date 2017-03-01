@@ -3,3 +3,4 @@
 *.dSYM
 *.a
 specs/*
+*.exe
