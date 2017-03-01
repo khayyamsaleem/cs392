@@ -15,7 +15,7 @@ int my_strcmp(char *x, char *y){
     a = my_strlen(x);
     b = my_strlen(y);
 
-    min = a > b ? a : b;
+    min = (a > b) ? a : b;
 
-    return my_strncmp(x, x, min);
+    return my_strncmp(x, y, min);
 }
