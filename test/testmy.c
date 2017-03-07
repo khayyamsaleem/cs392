@@ -88,7 +88,8 @@ int main(){
     my_char('\n');
     my_str("Testing my_atoi, ('a-b-54sc85-ed') -> 54\n");
     my_int(my_atoi("a-b-54sc85-ed"));
-    printf("%s", my_strnconcat(NULL, NULL, 5));
+    my_char('\n');
+    printf("%s\n", my_strnconcat(NULL, NULL, 5));
     my_char('\n');
     return 0;
 
