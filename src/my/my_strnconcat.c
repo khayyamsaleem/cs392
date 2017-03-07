@@ -10,6 +10,10 @@ char *my_strnconcat(char *a, char *b, int n){
     char *out;
     int length;
 
+    if(n < 0){
+        n = 0;
+    }
+
     if (a == NULL && b == NULL)
         return NULL;
     if (a == NULL){
