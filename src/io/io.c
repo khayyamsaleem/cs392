@@ -8,7 +8,7 @@ int main(){
 
     int enc = open("encrypted.txt", O_RDONLY, S_IREAD);
     int sol = open("solution.txt", O_RDWR, S_IWRITE);
-    
+
     char buf[3];
 
     while(r != 0){
