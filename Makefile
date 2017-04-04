@@ -22,8 +22,12 @@ MY_SRC := \
 	  src/my/my_strnconcat.c \
 	  src/my/my_atoi.c 
 
+SIGNALS := \
+	  src/signals/signals.c
 
-MY_OBJ := $(MY_SRC:.c=.o)
+
+MY_OBJ := $(MY_SRC:.c=.o) \
+	  $(SIGNALS:.c=.o)
 
 MY_LIB := lib/libmy.a
 
@@ -34,7 +38,8 @@ TESTS := \
 
 all: \
 	$(MY_LIB) \
-	$(TESTS) 
+	$(TESTS) \
+	$(SIGNALS)
 
 clean:
 	$(RM) $(MY_OBJ)

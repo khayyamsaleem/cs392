@@ -3,8 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <unistd.h>
-
+#include <unistd.h> 
 
 pid_t child;
 bool child_killed = false;
@@ -15,7 +14,7 @@ void send_sigusr1() { kill(child, SIGUSR1); }
 void handle_sigint()
 {
     if (child_killed) {
-        printf("Goodbye!");
+        puts("Goodbye!");
         exit(0);
     } else {
         kill(child, SIGUSR2);
@@ -31,11 +30,11 @@ void handle_timeout()
 }
 
 // child
-void handle_sigusr1() { printf("Signal Received!"); }
+void handle_sigusr1() { puts("Signal Received!"); }
 
 void handle_sigusr2()
 {
-    printf("Child exiting...");
+    puts("Child exiting...");
     exit(0);
 }
 
@@ -49,9 +48,10 @@ int main()
         signal(SIGINT, handle_sigint);
         signal(SIGCHLD, handle_sigchld);
         signal(SIGALRM, handle_timeout);
-        alarm(10);
-        while (true)
+        while (true){
+            alarm(10);
             pause();
+        }
     } else { // child
         signal(SIGTSTP, SIG_IGN);
         signal(SIGINT, SIG_IGN);
