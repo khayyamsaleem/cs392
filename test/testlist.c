@@ -11,6 +11,9 @@
     ((p) ? my_str("\x1B[32m✓\x1B[0m " #p "\n")                                 \
      : assert_failed(#p, __FILE__, __LINE__))
 
+/* I was helped by ben iofel to create really thorough tests */
+/* assert macro created with help of: http://stackoverflow.com/questions/5252375/custom-c-assert-macro */
+
 void assert_failed(char *p, char *file, int line){
     my_str(file);
     my_char(':');
@@ -18,15 +21,18 @@ void assert_failed(char *p, char *file, int line){
     my_str(": Assertion `");
     my_str(p);
     my_str("' failed\n");
+    /*kill program*/
     kill(getpid(), SIGABRT); /* suicide */
 }
 
+/*made with help from ben, quick note before set of tests */
 void note(char *s){
     my_str("\x1B[33m");
     my_str(s);
     my_str("\x1B[0m");
 }
 
+/*to ensure that juggling pointers didn't change any actual values*/
 int *mkint(int i){
     int *p = malloc(sizeof(int));
     *p = i;
@@ -50,6 +56,7 @@ int main(){
     char *l_elem = NULL;
     struct s_node *a = NULL, *b = NULL;
     struct s_node *new_b = NULL;
+    /* all declarations at the top for c90 compliance */
 
     my_str("\n\n\n");
 
