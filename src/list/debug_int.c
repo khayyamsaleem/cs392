@@ -1,17 +1,18 @@
 #include "list.h"
 
-void debug_int(struct s_node *head)
-{
-    for (struct s_node *n = head; n != NULL; n = n->next) {
+void debug_int(struct s_node *head){
+    struct s_node *x = head; /* traversal node */
+    while(x != NULL) {
         my_char('(');
-        print_int(n->prev);
+        print_int(x->prev);
         my_str(" <- ");
-        print_int(n);
+        print_int(x);
         my_str(" -> ");
-        print_int(n->next);
+        print_int(x->next);
         my_char(')');
 
-        if (n->next != NULL)
+        if (x->next != NULL)
             my_str(", ");
+        x = x->next;
     }
 }
