@@ -384,4 +384,5 @@ int main(){
     free(three);
 
     my_str("\n\n\n");
+    return 0;
 }
