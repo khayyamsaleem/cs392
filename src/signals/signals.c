@@ -9,7 +9,7 @@
 pid_t child;
 bool child_killed = false;
 
-// parent
+/* parent*/
 void send_sigusr1() { kill(child, SIGUSR1); }
 
 void handle_sigint()
@@ -30,7 +30,7 @@ void handle_timeout()
     exit(0);
 }
 
-// child
+/* child */
 void handle_sigusr1() { puts("Signal Received!"); }
 
 void handle_sigusr2()
@@ -44,7 +44,7 @@ int main()
     if ((child = fork()) < 0) {
         perror("fork");
         return 1;
-    } else if (child > 0) { // parent
+    } else if (child > 0) { /* parent */
         signal(SIGTSTP, send_sigusr1);
         signal(SIGINT, handle_sigint);
         signal(SIGCHLD, handle_sigchld);
@@ -53,7 +53,7 @@ int main()
             alarm(10);
             pause();
         }
-    } else { // child
+    } else { /* child */
         signal(SIGTSTP, SIG_IGN);
         signal(SIGINT, SIG_IGN);
         signal(SIGUSR1, handle_sigusr1);

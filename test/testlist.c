@@ -9,10 +9,9 @@
 
 #define assert(p)                                                              \
     ((p) ? my_str("\x1B[32m✓\x1B[0m " #p "\n")                                 \
-         : assert_failed(#p, __FILE__, __LINE__))
+     : assert_failed(#p, __FILE__, __LINE__))
 
-void assert_failed(char *p, char *file, int line)
-{
+void assert_failed(char *p, char *file, int line){
     my_str(file);
     my_char(':');
     my_int(line);
@@ -22,37 +21,47 @@ void assert_failed(char *p, char *file, int line)
     kill(getpid(), SIGABRT); /* suicide */
 }
 
-void note(char *s)
-{
+void note(char *s){
     my_str("\x1B[33m");
     my_str(s);
     my_str("\x1B[0m");
 }
 
-int *mkint(int i)
-{
+int *mkint(int i){
     int *p = malloc(sizeof(int));
     *p = i;
     return p;
 }
 
-int main()
-{
-    my_str("\n\n\n");
+int main(){
     struct s_node *head;
     struct s_node *null_head = NULL;
+    struct s_node *nn = new_node("hey");
+    struct s_node *s = new_node(NULL);
+    struct s_node *null_node = new_node(NULL);
+    struct s_node *next = NULL;
+    void *nullelem = NULL;
+    int *elem = NULL;
+    char *str = "helloworld";
+    struct s_node *node_L = new_node(&str[3]);
+    struct s_node *badnode = new_node("bad node");
+    int *one = mkint(1), *two = mkint(2), *three = mkint(3);
+    char *badelem = NULL;
+    char *l_elem = NULL;
+    struct s_node *a = NULL, *b = NULL;
+    struct s_node *new_b = NULL;
 
-    int *i1 = mkint(1), *i2 = mkint(2), *i3 = mkint(3);
+    my_str("\n\n\n");
+
 
     note("NULL checks\n");
     head = new_node(NULL);
     add_node(NULL, &head);
     assert(head->next == NULL && head->prev == NULL);
-/*    my_str("made it\n"); */
-    struct s_node *nn = new_node("hey");
-/*    my_str("made it\n"); */
+    /*    my_str("made it\n"); */
+    /*    my_str("made it\n"); */
     add_node(nn, NULL);
-/*    my_str("made it\n"); */
+    /*    my_str("made it\n"); */
     assert(nn->prev == NULL && nn->next == NULL);
     add_node(nn, &null_head);
     debug_string(null_head);
@@ -60,14 +69,13 @@ int main()
     assert(my_strcmp(elem_at(null_head, 0), "hey") == 0);
     empty_list(&null_head);
     assert(null_head == NULL);
-    struct s_node *s = new_node(NULL);
     add_node(s, &head);
     assert(count_s_nodes(head) == 1);
     remove_node(&s);
     assert(s == NULL);
     add_elem(NULL, &head);
     assert(count_s_nodes(head) == 1);
-/*    my_str("made it\n"); */
+    /*    my_str("made it\n"); */
     assert(head->next == NULL && head->prev == NULL);
     append(NULL, &head);
     assert(head->next == NULL && head->prev == NULL);
@@ -80,7 +88,7 @@ int main()
     s = new_node(NULL);
     append(s, &head);
     remove_node(&s);
-/*    my_str("made it\n");*/
+    /*    my_str("made it\n");*/
     assert(head->next == NULL && head->prev == NULL);
     add_node_at(NULL, &head, 0);
     assert(head->next == NULL && head->prev == NULL);
@@ -90,11 +98,11 @@ int main()
     empty_list(&null_head);
     s = new_node(NULL);
     add_node_at(s, &head, 0);
-/*    my_str("made it\n"); */
-    void *nullelem = remove_node(&s);
+    /*    my_str("made it\n"); */
+    nullelem = remove_node(&s);
     assert(nullelem == NULL);
     assert(head->next == NULL && head->prev == NULL);
-/*    my_str("made it\n"); */
+    /*    my_str("made it\n"); */
     assert(remove_node(NULL) == NULL);
     assert(remove_node(&null_head) == NULL);
     assert(remove_last(NULL) == NULL);
@@ -119,17 +127,17 @@ int main()
 
     my_str("\n-------\n");
 
-    head = new_node(i3);
+    head = new_node(three);
     traverse_int(head);
     debug_int(head);
     my_char('\n');
-    assert(remove_node(&head) == i3);
+    assert(remove_node(&head) == three);
     assert(head == NULL);
 
     my_str("-------\n");
 
-    head = new_node(i1);
-    add_elem(i2, &head);
+    head = new_node(one);
+    add_elem(two, &head);
     assert(node_at(head, -20) == head);
     note("added 1, 2\n");
     assert(*(int *)head->elem == 2);
@@ -149,8 +157,8 @@ int main()
 
     my_str("-------\n");
 
-    head = new_node(i1);
-    add_elem(i2, &head);
+    head = new_node(one);
+    add_elem(two, &head);
     note("added 1, 2\n");
     assert(*(int *)head->elem == 2);
     traverse_int(head);
@@ -169,15 +177,15 @@ int main()
 
     my_str("-------\n");
 
-    head = new_node(i1);
-    add_elem(i2, &head);
-    add_elem(i3, &head);
+    head = new_node(one);
+    add_elem(two, &head);
+    add_elem(three, &head);
     note("added 1, 2, 3\n");
     assert(*(int *)head->elem == 3);
     traverse_int(head);
     debug_int(head);
 
-    int *elem = remove_node_at(&head, 1);
+    elem = remove_node_at(&head, 1);
     my_char('\n');
     assert(*elem == 2);
     note("\nremoved list[1], now we have: ");
@@ -199,9 +207,9 @@ int main()
 
     my_str("-------\n");
 
-    head = new_node(i1);
-    add_elem(i2, &head);
-    add_elem(i3, &head);
+    head = new_node(one);
+    add_elem(two, &head);
+    add_elem(three, &head);
     note("added 1, 2, 3\n");
     assert(*(int *)head->elem == 3);
     traverse_int(head);
@@ -224,7 +232,6 @@ int main()
     add_node_at(new_node("last-node"), &head, 99);
     add_node_at(new_node("index-3"), &head, 3);
     add_node_at(NULL, &head, 2);
-    struct s_node *null_node = new_node(NULL);
     add_node_at(null_node, &head, 2);
     remove_node(&null_node);
     traverse_string(head);
@@ -234,7 +241,7 @@ int main()
     my_str("\n-------\n");
 
     note("checking that add_node_at can add before last node AND after all "
-         "nodes\n");
+            "nodes\n");
     head = new_node("4");
     add_elem("3", &head);
     add_elem("2", &head);
@@ -263,7 +270,7 @@ int main()
 
     head = new_node("head");
     add_elem("new-head", &head);
-    struct s_node *next = node_at(head, 1);
+    next = node_at(head, 1);
     append(new_node("new-tail"), &head);
     traverse_string(head);
     my_char('\n');
@@ -273,7 +280,6 @@ int main()
 
     my_str("\n-------\n");
 
-    char *str = "helloworld";
     head = new_node(&str[2]);
     assert(head->elem == &str[2]);
     assert(head->next == NULL);
@@ -283,23 +289,21 @@ int main()
     assert(count_s_nodes(head) == 2);
     add_elem(&str[0], &head);
     assert(count_s_nodes(head) == 3);
-    struct s_node *node_L = new_node(&str[3]);
     append(node_L, &head);
     assert(count_s_nodes(head) == 4);
     append(new_node(&str[4]), &head);
     assert(count_s_nodes(head) == 5);
     append(new_node(&str[5]), &head);
     assert(count_s_nodes(head) == 6);
-    struct s_node *badnode = new_node("bad node");
     add_node_at(badnode, &head, 3);
     assert(count_s_nodes(head) == 7);
-    char *badelem = remove_node(&badnode);
+    badelem = remove_node(&badnode);
     assert(my_strcmp(badelem, "bad node") == 0);
     assert(count_s_nodes(head) == 6);
     traverse_char(head);
     debug_char(head);
     my_char('\n');
-    char *l_elem = remove_last(&head);
+    l_elem = remove_last(&head);
     assert(*l_elem == 'w');
     assert(count_s_nodes(head) == 5);
     traverse_char(head);
@@ -322,7 +326,6 @@ int main()
      * Adding a list with append should add the node and all following
      */
 
-    struct s_node *a = NULL, *b = NULL;
     a = new_node("a1");
     append(new_node("a2"), &a);
     append(new_node("a3"), &a);
@@ -338,7 +341,7 @@ int main()
     my_char('\n');
 
     note("add_node b to a\n");
-    struct s_node *new_b = b->next;
+    new_b = b->next;
     add_node(b, &a);
     b = new_b;
     note("a: ");
@@ -372,13 +375,13 @@ int main()
 
     my_char('\n');
 
-    // make sure nothing changed these
-    assert(*i1 == 1);
-    assert(*i2 == 2);
-    assert(*i3 == 3);
-    free(i1);
-    free(i2);
-    free(i3);
+    /* make sure nothing changed these */
+    assert(*one == 1);
+    assert(*two == 2);
+    assert(*three == 3);
+    free(one);
+    free(two);
+    free(three);
 
     my_str("\n\n\n");
 }
