@@ -19,7 +19,7 @@ void assert_failed(char *p, char *file, int line)
     my_str(": Assertion `");
     my_str(p);
     my_str("' failed\n");
-    kill(getpid(), SIGABRT); // suicide
+    kill(getpid(), SIGABRT); /* suicide */
 }
 
 void note(char *s)
@@ -48,8 +48,11 @@ int main()
     head = new_node(NULL);
     add_node(NULL, &head);
     assert(head->next == NULL && head->prev == NULL);
+/*    my_str("made it\n"); */
     struct s_node *nn = new_node("hey");
+/*    my_str("made it\n"); */
     add_node(nn, NULL);
+/*    my_str("made it\n"); */
     assert(nn->prev == NULL && nn->next == NULL);
     add_node(nn, &null_head);
     debug_string(null_head);
@@ -64,6 +67,7 @@ int main()
     assert(s == NULL);
     add_elem(NULL, &head);
     assert(count_s_nodes(head) == 1);
+/*    my_str("made it\n"); */
     assert(head->next == NULL && head->prev == NULL);
     append(NULL, &head);
     assert(head->next == NULL && head->prev == NULL);
@@ -76,6 +80,7 @@ int main()
     s = new_node(NULL);
     append(s, &head);
     remove_node(&s);
+/*    my_str("made it\n");*/
     assert(head->next == NULL && head->prev == NULL);
     add_node_at(NULL, &head, 0);
     assert(head->next == NULL && head->prev == NULL);
@@ -85,9 +90,11 @@ int main()
     empty_list(&null_head);
     s = new_node(NULL);
     add_node_at(s, &head, 0);
+/*    my_str("made it\n"); */
     void *nullelem = remove_node(&s);
     assert(nullelem == NULL);
     assert(head->next == NULL && head->prev == NULL);
+/*    my_str("made it\n"); */
     assert(remove_node(NULL) == NULL);
     assert(remove_node(&null_head) == NULL);
     assert(remove_last(NULL) == NULL);
