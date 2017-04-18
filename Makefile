@@ -20,14 +20,18 @@ MY_SRC := \
     src/my/my_strdup.c \
     src/my/my_strconcat.c \
     src/my/my_strnconcat.c \
-    src/my/my_atoi.c 
+    src/my/my_atoi.c \
+    src/my/my_vect2str.c
 
 SIGNALS := \
     src/signals/signals.c
 
+PIPES := \
+    src/pipes/pipes.c
 
 MY_OBJ := $(MY_SRC:.c=.o) \
-    $(SIGNALS:.c=.o)
+    $(SIGNALS:.c=.o) \
+    $(PIPES:.c=.o)
 
 MY_LIB := lib/libmy.a
 
@@ -58,6 +62,8 @@ LIST_OUT := $(LIST_SRC:.c=.o)
 
 LIST_LIB := lib/liblist.a
 
+PIPES_BIN := src/pipes/pipes
+
 TESTS := \
     test/testmy \
     test/testbits \
@@ -68,11 +74,13 @@ all: \
     $(MY_LIB) \
     $(LIST_LIB) \
     $(TESTS) \
-    $(SIGNALS)
+    $(SIGNALS) \
+    $(PIPES_BIN)
 
 clean:
 	$(RM) $(MY_OBJ)
 	$(RM) $(LIST_OUT)
+	$(RM) $(PIPES_BIN)
 	$(RM) src/bits/bits.o
 	$(RM) -r test/*.dSYM
 	$(RM) -r src/my/*.dSYM
@@ -102,6 +110,8 @@ test/testlist: $(MY_LIB) $(LIST_LIB)
 $(MY_LIB): $(MY_OBJ)
 
 $(LIST_LIB): $(LIST_OUT)
+
+$(PIPES_BIN): $(MY_LIB)
 
 %.a:
 	$(RM) $@
