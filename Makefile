@@ -29,9 +29,14 @@ SIGNALS := \
 PIPES := \
     src/pipes/pipes.c
 
+SOCKET := \
+    src/socket/client.c
+
+
 MY_OBJ := $(MY_SRC:.c=.o) \
     $(SIGNALS:.c=.o) \
-    $(PIPES:.c=.o)
+    $(PIPES:.c=.o) \
+    $(SOCKET:.c=.o)
 
 MY_LIB := lib/libmy.a
 
@@ -64,6 +69,8 @@ LIST_LIB := lib/liblist.a
 
 PIPES_BIN := src/pipes/pipes
 
+SOCKET_BIN := src/socket/client
+
 TESTS := \
     test/testmy \
     test/testbits \
@@ -75,7 +82,8 @@ all: \
     $(LIST_LIB) \
     $(TESTS) \
     $(SIGNALS) \
-    $(PIPES_BIN)
+    $(PIPES_BIN) \
+    $(SOCKET_BIN)
 
 clean:
 	$(RM) $(MY_OBJ)
@@ -84,6 +92,7 @@ clean:
 	$(RM) src/bits/bits.o
 	$(RM) -r test/*.dSYM
 	$(RM) -r src/my/*.dSYM
+	$(RM) $(SOCKET_BIN)
 
 fclean: clean
 	$(RM) $(MY_LIB)
