@@ -14,6 +14,7 @@ clean:
 
 fclean: clean
 	rm $(EXECS)
+	rm -r *.dSYM
 
 re:
 	make fclean all
