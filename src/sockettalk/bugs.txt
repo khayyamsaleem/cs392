@@ -1,0 +1,3 @@
+when changing nickname, old name gets overwritten in display message
+clients on macOS destroy server, but everything works on linux lab
+used select instead of poll >.<
