@@ -1,5 +1,11 @@
+//Khayyam Saleem
+//I pledge my honor that I have abided by the Stevens Honor System.
 #include "my.h"
 #include "list.h"
+#include <strings.h>
+#include <string.h>
+#include <ncurses.h>
+#include <term.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -7,10 +13,6 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
-#include <strings.h>
-#include <string.h>
-#include <ncurses.h>
-#include <term.h>
 
 void setup(){
     initscr();
@@ -28,14 +30,15 @@ void setup(){
 
 
 int main(int argc, char* argv[]) {
-    int sockfd, n, ch, new_line, line_jump, y_diff, last_char_x;
+    int sockfd, n, ch, nl, line_jump, y_diff, last_char_x;
     struct sockaddr_in server;
     struct hostent *hp;
+    //stuff from canvas
     char username[100];
     char bufferi[1024];
     char buffero[1124];
-    char* exit_sequence = "garbage";
     fd_set readfds;
+    char* exitcode = "garbage";
     int x = 1;
     int y = 0;
     int last_char = 0;
@@ -171,7 +174,7 @@ int main(int argc, char* argv[]) {
     x = 0;
     y++;
     move(y, x);
-    new_line = y;
+    nl = y;
 
     if (connect(sockfd, (struct sockaddr *)&server, sizeof(server)) < 0) {
         endwin();
@@ -200,26 +203,26 @@ int main(int argc, char* argv[]) {
             color_set(2, NULL);
 
             if ((n = read(sockfd,buffero,1124)) <= 0) {
-                printw("Server closed. Exiting...");
+                printw("closing server...");
                 endwin();
                 exit(0);
             }
-            if (my_strcmp(exit_sequence, &buffero[0]) == 0) {
-                printw("Exit Successful");
+            if (my_strcmp(exitcode, &buffero[0]) == 0) {
+                printw("server closed.");
                 endwin();
                 exit(0);
             }
-            move(new_line, 0);
+            move(nl, 0);
             clrtobot();
-            y_diff = y - new_line;
+            y_diff = y - nl;
             addstr(buffero);
             line_jump = (my_strlen(buffero) / COLS) + 1;
             if (y < LINES - line_jump) {
-                new_line += line_jump;
-                y = new_line;
+                nl += line_jump;
+                y = nl;
             }
             else {
-                new_line = LINES - 1;
+                nl = LINES - 1;
                 y = LINES - 1;
                 printw("\n");
             }
@@ -229,12 +232,12 @@ int main(int argc, char* argv[]) {
                 color_set(1, NULL);
                 addstr(bufferi);
                 if (y < LINES - line_jump) {
-                    new_line = y;
-                    y = new_line + y_diff;
+                    nl = y;
+                    y = nl + y_diff;
                 }
                 else {
-                    new_line = LINES - line_jump;
-                    y = new_line + y_diff;
+                    nl = LINES - line_jump;
+                    y = nl + y_diff;
                 }
                 move(y, x);
             }
@@ -244,135 +247,160 @@ int main(int argc, char* argv[]) {
         }
 
         ch = getch();
-        if (ch == ERR) {}
-        else if (ch == 10) {
-            if ((n = write(sockfd, bufferi, 1024)) < 0) {
-                printw("error while writing.");
-                endwin();
-                exit(0);
-            }
-            bzero(bufferi, 1024);
-            move(new_line, 0);
-            clrtobot();
-            char_pos = 0;
-            last_char = 0;
-            x = 0;
-        }
-        else if (ch == KEY_RESIZE) {
-            int a, b;
-            getmaxyx(stdscr, a, b);
-            wresize(stdscr, a, b);
-        }
-        else if (ch == KEY_BACKSPACE) {
-            if (x > 0 || y != new_line) {
-                if (char_pos > 0) {
-                    char_pos--;
-                    last_char--;
-                }
-                if (char_pos == last_char)
-                    bufferi[char_pos] = '\0';
-                else {
-                    for (int i = char_pos; i <= last_char; i++) {
-                        bufferi[i] = bufferi[i+1];
+        switch(ch){
+            case ERR:
+                {break;};
+            case 10: 
+                {
+                    if ((n = write(sockfd, bufferi, 1024)) < 0) {
+                        printw("error while writing.");
+                        endwin();
+                        exit(0);
                     }
-                }
-                move(new_line, 0);
-                clrtobot();
-                addstr(bufferi);
-                if (x > 0) {
-                    x--;
-                }
-                else {
-                    x = COLS - 1;
-                    y--;
-                }
-                move(y, x);
-            }
-        }
-        else if (ch == KEY_DC) {
-            if (char_pos < last_char) {
-                for (int i = char_pos; i <= last_char; i++) {
-                    bufferi[i] = bufferi[i + 1];
-                }
-                move(new_line, 0);
-                clrtobot();
-                addstr(bufferi);
-                last_char--;
-                move(y, x);
-            }
-        }
-        else if (ch == KEY_LEFT) {
-            if (x > 0 || y != new_line) {
-                if (x > 0) {
-                    x--;
-                }
-                else {
-                    x = COLS - 1;
-                    y--;
-                }
-                move(y, x);
-                char_pos--;
-            }
-        }
-        else if (ch == KEY_RIGHT) {
-            if (char_pos < last_char) {
-                if (x < COLS - 1) {
-                    x++;
-                }
-                else {
-                    x = 0;
-                    y++;
-                }
-                move(y, x);
-                char_pos++;
-            }
-        }
-        else if (ch >= 32 && ch <= 126){
-            if (last_char < 1023) {
-                if (char_pos != last_char) {
-                    for (int i = last_char + 1; i > char_pos; i--) {
-                        bufferi[i] = bufferi[i - 1];
-                    }
-                    bufferi[char_pos] = (char)ch;
-                    line_jump = ((my_strlen(bufferi) - 1) / COLS) + 1;
-                    y_diff = y - new_line;
-                    last_char_x = last_char - (COLS * (line_jump - 1));
-                    move(new_line, 0);
-                    if (y >= LINES - line_jump && last_char_x == COLS - 1 && last_char > 0) {
-                        new_line--;
-                        y--;
-                    }
+                    bzero(bufferi, 1024);
+                    move(nl, 0);
                     clrtobot();
-                    addstr(bufferi);
-                    if (x < COLS - 1) {
-                        x++;
-                    }
-                    else {
-                        x = 0;
-                        y++;
-                    }
+                    char_pos = 0;
+                    last_char = 0;
+                    x = 0;
+                    break;
                 }
-                else {
-                    bufferi[last_char] = (char)ch;
-                    bufferi[last_char + 1] = '\0';
-                    addch(ch);
-                    if (x < COLS - 1) {
-                        x++;
-                    }
-                    else {
-                        x = 0;
-                        if (y < LINES - 1) {
-                            y++;
+            case KEY_RESIZE:
+                {
+                    int a, b;
+                    getmaxyx(stdscr, a, b);
+                    wresize(stdscr, a, b);
+                    break;
+                }
+            case KEY_BACKSPACE:
+                {
+
+                    if (x > 0 || y != nl) {
+                        if (char_pos > 0) {
+                            char_pos--;
+                            last_char--;
+                        }
+                        if (char_pos == last_char)
+                            bufferi[char_pos] = '\0';
+                        else {
+                            for (int i = char_pos; i <= last_char; i++) {
+                                bufferi[i] = bufferi[i+1];
+                            }
+                        }
+                        move(nl, 0);
+                        clrtobot();
+                        addstr(bufferi);
+                        if (x > 0) {
+                            x--;
                         }
                         else {
-                            new_line--;
+                            x = COLS - 1;
+                            y--;
+                        }
+                        move(y, x);
+                    }
+                    break;
+                }
+            case KEY_DC:
+                {
+
+                    if (char_pos < last_char) {
+                        for (int i = char_pos; i <= last_char; i++) {
+                            bufferi[i] = bufferi[i + 1];
+                        }
+                        move(nl, 0);
+                        clrtobot();
+                        addstr(bufferi);
+                        last_char--;
+                        move(y, x);
+                    }
+                    break;
+                }
+            case KEY_LEFT:
+                {
+
+                    if (x > 0 || y != nl) {
+                        if (x > 0) {
+                            x--;
+                        }
+                        else {
+                            x = COLS - 1;
+                            y--;
+                        }
+                        move(y, x);
+                        char_pos--;
+                    }
+                    break;
+                }
+            case KEY_RIGHT:
+                {
+
+                    if (char_pos < last_char) {
+                        if (x < COLS - 1) {
+                            x++;
+                        }
+                        else {
+                            x = 0;
+                            y++;
+                        }
+                        move(y, x);
+                        char_pos++;
+                    }
+                    break;
+                }
+            default: 
+                {
+
+                    if (ch >= 32 && ch <= 126){
+                        if (last_char < 1023) {
+                            if (char_pos != last_char) {
+                                for (int i = last_char + 1; i > char_pos; i--) {
+                                    bufferi[i] = bufferi[i - 1];
+                                }
+                                bufferi[char_pos] = (char)ch;
+                                line_jump = ((my_strlen(bufferi) - 1) / COLS) + 1;
+                                y_diff = y - nl;
+                                last_char_x = last_char - (COLS * (line_jump - 1));
+                                move(nl, 0);
+                                if (y >= LINES - line_jump && last_char_x == COLS - 1 && last_char > 0) {
+                                    nl--;
+                                    y--;
+                                }
+                                clrtobot();
+                                addstr(bufferi);
+                                if (x < COLS - 1) {
+                                    x++;
+                                }
+                                else {
+                                    x = 0;
+                                    y++;
+                                }
+                            }
+                            else {
+                                bufferi[last_char] = (char)ch;
+                                bufferi[last_char + 1] = '\0';
+                                addch(ch);
+                                if (x < COLS - 1) {
+                                    x++;
+                                }
+                                else {
+                                    x = 0;
+                                    if (y < LINES - 1) {
+                                        y++;
+                                    }
+                                    else {
+                                        nl--;
+                                    }
+                                }
+                            }
+                            char_pos++;
+                            last_char++;
+                            move(y, x);
                         }
                     }
+                    break;
                 }
-                char_pos++;
-                last_char++;
-                move(y, x);
-            }
+
         }
         refresh();
     }
