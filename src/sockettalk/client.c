@@ -26,6 +26,8 @@ void setup(){
         init_pair(1, COLOR_MAGENTA, COLOR_BLACK);
         init_pair(2, COLOR_GREEN, COLOR_BLACK);
     }
+    color_set(2, NULL);
+    printw("Please enter a username: ");
 }
 
 
@@ -65,10 +67,10 @@ int main(int argc, char* argv[]) {
     server.sin_port = htons(atoi(argv[2]));
 
 
+    //set up curses window
     setup();
-    x = 25;
-    color_set(2, NULL);
-    printw("Please enter a username: ");
+
+    x = 25; //set cursor position for init msg
     move(y, x);
     while( (ch = getch()) != 10) {
         color_set(1, NULL);
