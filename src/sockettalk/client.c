@@ -12,45 +12,7 @@
 #include <ncurses.h>
 #include <term.h>
 
-int main(int argc, char* argv[]) {
-    int sockfd, n;
-    struct sockaddr_in server;
-    struct hostent *hp;
-    char username[100];
-    char bufferi[1024];
-    char buffero[1124];
-    char* exit_sequence = "garbage";
-    fd_set readfds;
-    int x = 1;
-    int y = 0;
-    int last_char = 0;
-    int char_pos = 0;
-    int ch;
-    int new_line;
-    int line_jump;
-    int y_diff;
-    int last_char_x;
-
-    if (argc != 3) {
-        my_str("Usage: ./client <host> <port>");
-        exit(0);
-    }
-
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0) {
-        my_str("Socket Error\n");
-        exit(0);
-    }
-    hp = gethostbyname(argv[1]);
-    if (hp == 0) {
-        my_str("Host Error: host does not exist\n");
-        exit(0);
-    }
-    bzero((char *) &server, sizeof(server));
-    server.sin_family = AF_INET;
-    bcopy((char *)hp->h_addr_list[0], (char *)&server.sin_addr.s_addr, hp->h_length);
-    server.sin_port = htons(atoi(argv[2]));
-
+void setup(){
     initscr();
     keypad(stdscr, TRUE);
     scrollok(stdscr, TRUE);
@@ -62,7 +24,45 @@ int main(int argc, char* argv[]) {
         init_pair(1, COLOR_MAGENTA, COLOR_BLACK);
         init_pair(2, COLOR_GREEN, COLOR_BLACK);
     }
+}
 
+
+int main(int argc, char* argv[]) {
+    int sockfd, n, ch, new_line, line_jump, y_diff, last_char_x;
+    struct sockaddr_in server;
+    struct hostent *hp;
+    char username[100];
+    char bufferi[1024];
+    char buffero[1124];
+    char* exit_sequence = "garbage";
+    fd_set readfds;
+    int x = 1;
+    int y = 0;
+    int last_char = 0;
+    int char_pos = 0;
+
+    if (argc != 3) {
+        my_str("Usage: ./client <host> <port>");
+        exit(0);
+    }
+
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0) {
+        my_str("error while creating socket\n");
+        exit(0);
+    }
+    hp = gethostbyname(argv[1]);
+    if (hp == 0) {
+        my_str("error while getting host\n");
+        exit(0);
+    }
+    bzero((char *) &server, sizeof(server));
+    server.sin_family = AF_INET;
+    bcopy((char *)hp->h_addr_list[0], (char *)&server.sin_addr.s_addr, hp->h_length);
+    server.sin_port = htons(atoi(argv[2]));
+
+
+    setup();
     x = 25;
     color_set(2, NULL);
     printw("Please enter a username: ");
@@ -247,7 +247,7 @@ int main(int argc, char* argv[]) {
         if (ch == ERR) {}
         else if (ch == 10) {
             if ((n = write(sockfd, bufferi, 1024)) < 0) {
-                printw("Write error.");
+                printw("error while writing.");
                 endwin();
                 exit(0);
             }
