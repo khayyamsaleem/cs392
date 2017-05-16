@@ -71,6 +71,10 @@ PIPES_BIN := src/pipes/pipes
 
 SOCKET_BIN := src/socket/client
 
+SOCKETTALK_BIN := \
+    src/sockettalk/server \
+    src/sockettalk/client
+
 TESTS := \
     test/testmy \
     test/testbits \
@@ -83,7 +87,8 @@ all: \
     $(TESTS) \
     $(SIGNALS) \
     $(PIPES_BIN) \
-    $(SOCKET_BIN)
+    $(SOCKET_BIN) \
+    $(SOCKETTALK_BIN)
 
 clean:
 	$(RM) $(MY_OBJ)
@@ -93,6 +98,7 @@ clean:
 	$(RM) -r test/*.dSYM
 	$(RM) -r src/my/*.dSYM
 	$(RM) $(SOCKET_BIN)
+	$(RM) $(SOCKETTALK_BIN)
 
 fclean: clean
 	$(RM) $(MY_LIB)
@@ -121,6 +127,10 @@ $(MY_LIB): $(MY_OBJ)
 $(LIST_LIB): $(LIST_OUT)
 
 $(PIPES_BIN): $(MY_LIB)
+
+$(SOCKETTALK_BIN): $(MY_LIB) $(LIST_LIB) 
+
+$(SOCKETTALK_BIN): LDLIBS += $(shell pkg-config --libs ncurses)
 
 %.a:
 	$(RM) $@
